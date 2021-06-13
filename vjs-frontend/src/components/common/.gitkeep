@@ -1,0 +1,1 @@
+# Presentational/Stateless Shared Components are the components who have an indirect access/subscription to the state of the app. They are used only to display information passed through props and cannot trigger any change to the state directly.
