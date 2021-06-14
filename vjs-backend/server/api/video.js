@@ -12,20 +12,20 @@ VideoRouter.get("/:video_id", validator.params(video_id), function(req, res) {
   return Video.readVideo(req, res)
 });
 
-VideoRouter.get("/:video_id/metadata", validator.params(video_id), function(req, res) {
+VideoRouter.get("/:video_id/metadata", validator.params(video_id), async (req, res) => {
   console.log("[api/video/metadata] get")
   // console.log("[api/video/metadata] req.params", req.params)
   // console.log("[api/video/metadata] req.body", req.body)
   // console.log("[api/video/metadata] req.headers", req.headers)
-  return Video.readVideoMetadata(req, res)
+  return await Video.readVideoMetadata(req, res)
 });
 
-VideoRouter.get("/:video_id/thumbnail", validator.params(video_id), function(req, res) {
+VideoRouter.get("/:video_id/thumbnail", validator.params(video_id), async (req, res) => {
   console.log("[api/video/thumbnail] get")
   // console.log("[api/video/thumbnail] req.params", req.params)
   // console.log("[api/video/thumbnail] req.body", req.body)
   // console.log("[api/video/thumbnail] req.headers", req.headers)
-  return Video.readVideoThumbnail(req, res)
+  return await Video.readVideoThumbnail(req, res)
 });
 
 module.exports = VideoRouter;
