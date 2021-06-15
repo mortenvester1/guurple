@@ -40,13 +40,16 @@ class App extends React.Component {
     const { selectedMenu } = this.state;
 
     const videoJsOptions = {
-      id: 1,
-      autoplay: true,
-      controls: true,
-      sources: [{
-        src: '/Users/vester/Movies/bobs.burgers/bobs.burgers.s06/bobs.burgers.s06e01.mp4',
-        type: 'video/mp4'
-      }]
+      video_id: 1,
+      name: "allaal",
+      "data-setup": {
+        playbackRates: [0.5, 1, 1.25, 1.5, 5],
+        aspectRatio: '9:16',
+        skin: "vjs-forest-city",
+        responsive: true,
+        autoPlay: true,
+        controls: true,
+      },
     }
 
     const compnentToRender = () => {
@@ -99,9 +102,8 @@ class App extends React.Component {
             <div>
              {compnentToRender()}
             </div>
-            <VideoPlayer { ...videoJsOptions }/>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+          <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED | Adopted by Gurpgork</Footer>
         </Layout>
       </Layout>
     );
