@@ -40,19 +40,20 @@ class App extends React.Component {
     const { selectedMenu } = this.state;
 
     const videoJsOptions = {
-      video_id: 1,
-      name: "allaal",
-      "data-setup": {
+      videoId: 1,
+      name: "video-sample-name",
+      playerOptions: {
         playbackRates: [0.5, 1, 1.25, 1.5, 5],
-        aspectRatio: '9:16',
+        fluid: true,
         skin: "vjs-forest-city",
         responsive: true,
-        autoPlay: true,
+        autoPlay: false,
         controls: true,
+        preload: "auto",
       },
     }
 
-    const compnentToRender = () => {
+    const componentToRender = () => {
       switch(selectedMenu) {
         case "VideoPlayer":
           return <VideoPlayer { ...videoJsOptions }/>;
@@ -99,9 +100,7 @@ class App extends React.Component {
         <Layout className="site-layout">
           <Header className="site-layout-background" style={{ padding: 0 }} />
           <Content style={{ margin: '16px 16px' }}>
-            <div>
-             {compnentToRender()}
-            </div>
+             {componentToRender()}
           </Content>
           <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED | Adopted by Gurpgork</Footer>
         </Layout>

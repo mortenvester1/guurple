@@ -1,3 +1,4 @@
+require('./videoPlayer.css');
 import React from 'react';
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css';
@@ -8,10 +9,11 @@ class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      video_id: this.props.video_id,
-      video_metadata: {
+      videoId: this.props.videoId,
+      videoMetadata: {
         name: this.props.name
-      }
+      },
+      playerOptions: this.props.playerOptions,
     }
   }
 
@@ -38,24 +40,21 @@ class VideoPlayer extends React.Component {
   render() {
     console.log('[containers/VideoPlayer] render')
     return (
-        <div
-          className="video-wrapper"
-          style={{ width: "100%", height:"100%"}}>
+        <div className="video-wrapper">
           <video
-            controls
-            muted
-            autoPlay
             crossOrigin="anonymous"
             ref={ node => this.videoNode = node }
-            className="video-js"
-            poster={`http://localhost:8080/api/video/${this.state.video_id}/thumbnail`}
-            style={{ "min-width": "100%", "min-height": "100%", "object-fit": "fill"}}>
+            class="video-js"
+            id="video-js-player"
+            poster={`http://localhost:8080/api/video/${this.state.videoId}/thumbnail`}
+            data-setup={JSON.stringify(this.state.playerOptions)}
+            >
             <source
-              src={`http://localhost:8080/api/video/${this.state.video_id}`}
+              src={`http://localhost:8080/api/video/${this.state.videoId}`}
               type="video/mp4">
             </source>
           </video>
-          <h1>{ this.state.video_metadata.name }</h1>
+          <h1>{ this.state.videoMetadata.name }</h1>
         </div>
     )
   }

@@ -1,0 +1,8 @@
+.video-wrapper {
+  background-color: red;
+}
+
+#video-js-player{
+  width: 100%;
+  height: auto;
+}
