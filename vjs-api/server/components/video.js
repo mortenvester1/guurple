@@ -2,11 +2,12 @@
 const fs = require('fs')
 const path = require('path')
 const thumbsupply = require('thumbsupply');
+const MEDIADIR = process.env.VJS_MEDIA_DIR || "assets";
 
 const Video = {
   readVideo: (req, res) => {
     console.log("[components/video/readVideo] start");
-    const videoPath = `assets/${req.params.videoId}.mp4`
+    const videoPath = `${MEDIADIR}/${req.params.videoId}.mp4`
     const fileSize = fs.statSync(videoPath).size
     const range = req.headers.range
     if (range) {
@@ -44,7 +45,7 @@ const Video = {
   },
   readVideoThumbnail: (req, res) => {
     console.log("[components/video/readVideoThumbnail] start");
-    const videoPath = `assets/${req.params.videoId}.mp4`
+    const videoPath = `${MEDIADIR}/${req.params.videoId}.mp4`
     thumbsupply.lookupThumbnail(videoPath)
       .then(thumb => res.sendFile(thumb))
       .catch(err => {

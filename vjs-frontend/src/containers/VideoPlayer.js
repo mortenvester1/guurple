@@ -1,7 +1,8 @@
-require('./videoPlayer.css');
+//require('./videoPlayer.css');
 import React from 'react';
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css';
+import videoService from "../services/video.js";
 
 
 class VideoPlayer extends React.Component {
@@ -44,13 +45,15 @@ class VideoPlayer extends React.Component {
           <video
             crossOrigin="anonymous"
             ref={ node => this.videoNode = node }
-            class="video-js"
+            className="video-js"
             id="video-js-player"
-            poster={`http://localhost:8080/api/video/${this.state.videoId}/thumbnail`}
+            poster={videoService.getVideoThumbnailUrl(this.state.videoId)}
+            //poster={`http://localhost:8080/api/video/${this.state.videoId}/thumbnail`}
             data-setup={JSON.stringify(this.state.playerOptions)}
             >
             <source
-              src={`http://localhost:8080/api/video/${this.state.videoId}`}
+              // src={`http://localhost:8080/api/video/${this.state.videoId}`}
+              src={videoService.getVideoUrl(this.state.videoId)}
               type="video/mp4">
             </source>
           </video>

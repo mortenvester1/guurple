@@ -1,21 +1,85 @@
 version: '3.7'
 
 services:
+  api:
+    image: vjs-api:latest
+    container_name: vjs-api
+    build:
+      context: ./vjs-api
+      dockerfile: Dockerfile
+      args:
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+        VJS_API_PORT: ${VJS_API_PORT}
+        VJS_MONGO_PORT: ${VJS_MONGO_PORT}
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      VJS_MONGO_PORT: ${VJS_MONGO_PORT}
+    ports:
+      - ${VJS_API_PORT}:${VJS_API_PORT}
+    depends_on:
+      - mongo
+    volumes:
+      - type: bind
+        source: ${VJS_MEDIA_DIR}
+        target: /media
+        read_only: true
+
   frontend:
+    image: vjs-frontend:latest
     container_name: vjs-frontend
-    build: ./vjs-frontend
+    build:
+      context: ./vjs-frontend
+      dockerfile: Dockerfile
+      args:
+        VJS_FRONTEND_PORT: ${VJS_FRONTEND_PORT}
+        VJS_API_PORT: ${VJS_API_PORT}
+    environment:
+      VJS_API_PORT: ${VJS_API_PORT}
     ports:
-      - 3000:3000
+      - ${VJS_FRONTEND_PORT}:${VJS_FRONTEND_PORT}
     depends_on:
-      - backend
-  backend:
-    container_name: vjs-backend
-    build: ./vjs-backend
+      - api
+
+  mongo:
+    image: vjs-mongo:latest
+    container_name: mongodb
+    build:
+      context: ./vjs-mongo
+      dockerfile: Dockerfile
+      args:
+        MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+        MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
     ports:
-      - 8080:8080
-    depends_on:
-      - db
-  db:
-    container_name: mongo
-    ports:
-      - 27017:27017
+      - ${VJS_MONGO_PORT}:${VJS_MONGO_PORT}
+    volumes:
+      - type: bind
+        source: ${VJS_DB_DIR}
+        target: /data/db
+
+  # web-interface for admin mongodb
+  # mongo-express:
+  #   image: mongo-express:latest
+  #   container_name: mongodb-express
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   environment:
+  #     ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+  #     ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+  #     ME_CONFIG_MONGODB_URL: mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/
+network:
+  vjs-network:

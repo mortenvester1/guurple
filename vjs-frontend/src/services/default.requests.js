@@ -1,70 +1,100 @@
 import axios from "axios";
+var qs = require('qs');
+import process from 'process';
 
-const post = async (host, service, payload, ...urlParams) => {
-  return axios
-  .post([host, service, ...urlParams].join("/"), payload)
-  .then(response => {
-    return response.data;
-  })
-  .catch(reason => {
-    return {
-      error: {
-        code: reason.statusCode,
-        message: reason.statusMessage
-      }
-    };
-  });
+//TODO: Why the fuck is this not working?
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080/api";
+console.log(API_URL)
+console.log(process.env)
+
+const baseService = {
+  formUrl: function(url, params) {
+    if (params) {
+      return `${API_URL}${url}?${qs.stringify(params)}`
+    }
+    else {
+      return `${API_URL}${url}`
+    }
+  },
+  post: async function(url, data, params) {
+    return axios
+      .post({
+        baseURL: API_URL,
+        url: url,
+        data: data,
+        params: params
+      })
+      .then(response => {
+        return response.data;
+      })
+      .catch(reason => {
+        return {
+          error: {
+            code: reason.statusCode,
+            message: reason.statusMessage
+          }
+        };
+      });
+  },
+  put: async function(url, data, params) {
+    return axios
+    .put({
+      baseURL: API_URL,
+      url: url,
+      data: data,
+      params: params
+    })
+    .then(response => {
+      return response.data;
+    })
+    .catch(reason => {
+      return {
+        error: {
+          code: reason.statusCode,
+          message: reason.statusMessage
+        }
+      };
+    });
+  },
+  get: async function(url, params) {
+    return axios
+    .get({
+      baseURL: API_URL,
+      url: url,
+      params: params
+    })
+    .then(response => {
+      return response.data;
+    })
+    .catch(reason => {
+      return {
+        error: {
+          code: reason.statusCode,
+          message: reason.statusMessage
+        }
+      };
+    });
+  },
+  del: async function(url, data, params) {
+    return axios
+    .delete({
+      baseURL: API_URL,
+      url: url,
+      data: data,
+      params: params
+    })
+    .then(response => {
+      return response.data;
+    })
+    .catch(reason => {
+      return {
+        error: {
+          code: reason.statusCode,
+          message: reason.statusMessage
+        }
+      };
+    });
+  }
 };
 
-
-const put = async (host, service, payload, ...urlParams) => {
-  return axios
-  .put([host, service, ...urlParams].join("/"), payload)
-  .then(response => {
-    return response.data;
-  })
-  .catch(reason => {
-    return {
-      error: {
-        code: reason.statusCode,
-        message: reason.statusMessage
-      }
-    };
-  });
-};
-
-
-const get = async (host, service, ...urlParams) => {
-  return axios
-  .get([host, service, ...urlParams].join("/"))
-  .then(response => {
-    return response.data;
-  })
-  .catch(reason => {
-    return {
-      error: {
-        code: reason.statusCode,
-        message: reason.statusMessage
-      }
-    };
-  });
-};
-
-
-const del = async (host, service, ...urlParams) => {
-  return axios
-  .delete([host, service, ...urlParams].join("/"))
-  .then(response => {
-    return response.data;
-  })
-  .catch(reason => {
-    return {
-      error: {
-        code: reason.statusCode,
-        message: reason.statusMessage
-      }
-    };
-  });
-};
-
-export { post, get, del, put };
+export { baseService };

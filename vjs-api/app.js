@@ -8,7 +8,7 @@ const session = require("express-session");
 const VjsRouter = require("./server/api/index");
 //const Security = require("./utils/security");
 
-const PORT = 8080;
+const PORT = process.env.VJS_API_PORT || 8080;
 const app = express();
 app.use(cors());
 
