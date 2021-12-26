@@ -1,6 +1,12 @@
 #!/bin/bash
 source .env
-docker network create vjs-network || :
+
+if [[ -z `docker network ls | grep ${NETWORK}` ]];
+then
+    echo "create docker network ${NETWORK}"
+    docker network create ${NETWORK}
+fi
+
 if [[ $1 = "api" ]];
 then
     docker run\
@@ -13,7 +19,7 @@ then
         --publish ${VJS_API_PORT}:${VJS_API_PORT}\
         --mount type=bind,source=${SOURCE_DIR}/vjs-api,destination=/usr/src/app,ro\
         --mount type=bind,source=${VJS_MEDIA_DIR},destination=/media,ro\
-        --network vjs-network\
+        --network ${NETWORK}\
         --name vjs-api\
         --rm\
         vjs-api:dev-latest npm run dev
@@ -24,7 +30,7 @@ then
         --env PORT=${VJS_FRONTEND_PORT}\
         --publish ${VJS_FRONTEND_PORT}:${VJS_FRONTEND_PORT}\
         --mount type=bind,source=${SOURCE_DIR}/vjs-frontend,destination=/usr/src/app,ro\
-        --network vjs-network\
+        --network ${NETWORK}\
         --name vjs-frontend\
         --rm\
         vjs-frontend:dev-latest
@@ -38,7 +44,7 @@ then
         --env DB_PASSWORD=${DB_PASSWORD}\
         --publish ${VJS_MONGO_PORT}:${VJS_MONGO_PORT}\
         --mount type=bind,source=${VJS_DB_DIR},destination=/data/db\
-        --network vjs-network\
+        --network ${NETWORK}\
         --name vjs-mongo\
         --rm\
         vjs-mongo:dev-latest

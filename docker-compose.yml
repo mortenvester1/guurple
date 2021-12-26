@@ -13,6 +13,7 @@ services:
         DB_PASSWORD: ${DB_PASSWORD}
         VJS_API_PORT: ${VJS_API_PORT}
         VJS_MONGO_PORT: ${VJS_MONGO_PORT}
+      target: production
     environment:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
@@ -37,6 +38,7 @@ services:
       args:
         VJS_FRONTEND_PORT: ${VJS_FRONTEND_PORT}
         VJS_API_PORT: ${VJS_API_PORT}
+      target: production
     environment:
       VJS_API_PORT: ${VJS_API_PORT}
     ports:

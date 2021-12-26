@@ -1,11 +1,7 @@
 import axios from "axios";
 var qs = require('qs');
-import process from 'process';
 
-//TODO: Why the fuck is this not working?
 const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080/api";
-console.log(API_URL)
-console.log(process.env)
 
 const baseService = {
   formUrl: function(url, params) {

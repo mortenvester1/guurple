@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:alpine AS dev
 ARG VJS_API_PORT 8080
 ARG VJS_MONGO_PORT 8080
 ARG DB_NAME
@@ -14,11 +14,12 @@ ENV VJS_MONGO_PORT $VJS_MONGO_PORT
 ENV DB_NAME  $DB_NAME
 ENV DB_USER  $DB_USER
 ENV DB_PASSWORD  $DB_PASSWORD
+ENV NODE_ENV dev
 
 # install bash
 RUN apk update &&\
     apk upgrade &&\
-    apk add bash
+    apk add bash ffmpeg
 
 # need ffmpeg
 
@@ -33,4 +34,11 @@ RUN mkdir -p /media
 
 #Expose port and start application
 EXPOSE $VJS_API_PORT
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "run", "dev" ]
+
+FROM dev AS build
+ENV NODE_ENV test
+
+FROM build AS production
+ENV NODE_ENV production
+ENTRYPOINT [ "npm", "run", "start" ]
