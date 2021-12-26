@@ -1,4 +1,3 @@
-//require('./videoPlayer.css');
 import React from 'react';
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css';

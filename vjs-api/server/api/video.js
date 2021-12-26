@@ -6,25 +6,16 @@ const { videoId } = require("../req-schemas/video");
 
 VideoRouter.get("/:videoId", validator.params(videoId), function(req, res) {
   console.log("[api/video] get")
-  // console.log("[api/video] req.params", req.params)
-  // console.log("[api/video] req.body", req.body)
-  // console.log("[api/video] req.headers", req.headers)
   return Video.readVideo(req, res)
 });
 
 VideoRouter.get("/:videoId/metadata", validator.params(videoId), async (req, res) => {
   console.log("[api/video/metadata] get")
-  // console.log("[api/video/metadata] req.params", req.params)
-  // console.log("[api/video/metadata] req.body", req.body)
-  // console.log("[api/video/metadata] req.headers", req.headers)
   return await Video.readVideoMetadata(req, res)
 });
 
 VideoRouter.get("/:videoId/thumbnail", validator.params(videoId), async (req, res) => {
   console.log("[api/video/thumbnail] get")
-  // console.log("[api/video/thumbnail] req.params", req.params)
-  // console.log("[api/video/thumbnail] req.body", req.body)
-  // console.log("[api/video/thumbnail] req.headers", req.headers)
   return await Video.readVideoThumbnail(req, res)
 });
 

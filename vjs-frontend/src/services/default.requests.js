@@ -13,83 +13,68 @@ const baseService = {
     }
   },
   post: async function(url, data, params) {
-    return axios
-      .post({
-        baseURL: API_URL,
-        url: url,
-        data: data,
-        params: params
+    try {
+      const resp = await axios
+        .request({
+          method: "post",
+          baseURL: API_URL,
+          url: url,
+          data: data,
+          params: params
       })
-      .then(response => {
-        return response.data;
-      })
-      .catch(reason => {
-        return {
-          error: {
-            code: reason.statusCode,
-            message: reason.statusMessage
-          }
-        };
-      });
+      console.log(resp.data)
+      return resp.data
+    } catch (err) {
+      console.log(err)
+    }
   },
   put: async function(url, data, params) {
-    return axios
-    .put({
-      baseURL: API_URL,
-      url: url,
-      data: data,
-      params: params
-    })
-    .then(response => {
-      return response.data;
-    })
-    .catch(reason => {
-      return {
-        error: {
-          code: reason.statusCode,
-          message: reason.statusMessage
-        }
-      };
-    });
+    try {
+      const resp = await axios
+        .request({
+          method: "post",
+          baseURL: API_URL,
+          url: url,
+          data: data,
+          params: params
+      })
+      console.log(resp.data)
+      return resp.data
+    } catch (err) {
+      console.log(err)
+    }
   },
   get: async function(url, params) {
-    return axios
-    .get({
-      baseURL: API_URL,
-      url: url,
-      params: params
-    })
-    .then(response => {
-      return response.data;
-    })
-    .catch(reason => {
-      return {
-        error: {
-          code: reason.statusCode,
-          message: reason.statusMessage
-        }
-      };
-    });
+    console.log("[baseService] get")
+    try {
+      const resp = await axios
+      .request({
+        method: "get",
+        baseURL: API_URL,
+        url: url,
+        params: params
+      })
+      console.log(resp.data)
+      return resp.data
+    } catch (err) {
+      console.log(err)
+    }
   },
   del: async function(url, data, params) {
-    return axios
-    .delete({
-      baseURL: API_URL,
-      url: url,
-      data: data,
-      params: params
-    })
-    .then(response => {
-      return response.data;
-    })
-    .catch(reason => {
-      return {
-        error: {
-          code: reason.statusCode,
-          message: reason.statusMessage
-        }
-      };
-    });
+    try {
+      const resp = await axios
+        .request({
+          method: "delete",
+          baseURL: API_URL,
+          url: url,
+          data: data,
+          params: params
+      })
+      console.log(resp.data)
+      return resp.data
+    } catch (err) {
+      console.log(err)
+    }
   }
 };
 

@@ -10,6 +10,10 @@ const videoService = {
     let url = baseService.formUrl(`/video/${videoId}/thumbnail`)
     console.log(url)
     return url
+  },
+  getVideoLib: async function(rootDir) {
+    console.log("[videoService] getVideoLib")
+    return await baseService.get(`/videolib`)
   }
 }
 
