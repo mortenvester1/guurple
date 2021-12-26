@@ -42,12 +42,11 @@ class App extends React.Component {
     const videoJsOptions = {
       videoId: 1,
       name: "video-sample-name",
+      skin: "video-js vjs-theme-fantasy",
       playerOptions: {
-        playbackRates: [0.5, 1, 1.25, 1.5, 5],
+        playbackRates: [0.5, 1, 1.25, 1.5, 2],
         fluid: true,
-        skin: "vjs-forest-city",
         responsive: true,
-        autoPlay: false,
         controls: true,
         preload: "auto",
       },

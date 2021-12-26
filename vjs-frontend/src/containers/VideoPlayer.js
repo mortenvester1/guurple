@@ -2,7 +2,9 @@
 import React from 'react';
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css';
+import '@videojs/themes/dist/fantasy/index.css'
 import videoService from "../services/video.js";
+import './VideoPlayer.css';
 
 
 class VideoPlayer extends React.Component {
@@ -10,11 +12,12 @@ class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      playerOptions: this.props.playerOptions,
+      skin: this.props.skin,
       videoId: this.props.videoId,
       videoMetadata: {
         name: this.props.name
       },
-      playerOptions: this.props.playerOptions,
     }
   }
 
@@ -45,14 +48,12 @@ class VideoPlayer extends React.Component {
           <video
             crossOrigin="anonymous"
             ref={ node => this.videoNode = node }
-            className="video-js"
+            className={this.state.skin}
             id="video-js-player"
             poster={videoService.getVideoThumbnailUrl(this.state.videoId)}
-            //poster={`http://localhost:8080/api/video/${this.state.videoId}/thumbnail`}
             data-setup={JSON.stringify(this.state.playerOptions)}
             >
             <source
-              // src={`http://localhost:8080/api/video/${this.state.videoId}`}
               src={videoService.getVideoUrl(this.state.videoId)}
               type="video/mp4">
             </source>
