@@ -3,7 +3,7 @@ import videoService from "../services/video.js";
 import { Table } from 'antd';
 import {
   PlayCircleOutlined,
-  FileOutlined,
+  PlusCircleOutlined,
 } from '@ant-design/icons';
 
 
@@ -20,21 +20,27 @@ class VideoLib extends Component {
           title: 'Name',
           dataIndex: 'name',
           key: 'name',
-          render: text => <a>{text}</a>,
+          render: (text, record, index) => <a>{text}</a>,
+          onCell: (record, index) => { onClick: event => {console.log("asds")}}
         },
         {
           title: 'Path',
           dataIndex: 'path',
-          key: 'age',
+          key: 'path',
         },
         {
-          title: 'isDirectory',
+          title: '',
           dataIndex: 'isDir',
           key: 'isDir',
-          render: value => value ? <FileOutlined/> : <PlayCircleOutlined/>
+          render: value => value ? <PlusCircleOutlined/> : <PlayCircleOutlined/>
         },
       ]
     }
+  }
+
+  async handleClickOnName(record) {
+    console.log('[containers/VideoLib] handleClickOnName')
+    console.log(record)
   }
 
   async componentDidMount() {
