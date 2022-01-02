@@ -1,9 +1,9 @@
 import React from 'react'
 //import getVideos from './services/videos'
-import VideoLib from './containers/VideoLib'
-import VideoPlayer from './containers/VideoPlayer'
-import RecipeLib from './containers/RecipeLib'
-import Home from './containers/Home'
+import VideoLib from './components/VideoLib'
+import VideoPlayer from './components/VideoPlayer'
+import RecipeLib from './components/RecipeLib'
+import Home from './components/Home'
 
 import { Layout, Menu } from 'antd';
 import 'antd/dist/antd.css';

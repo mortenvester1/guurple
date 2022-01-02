@@ -21,14 +21,14 @@ class VideoPlayer extends React.Component {
   }
 
   async componentDidMount() {
-    console.log('[containers/VideoPlayer] componentDidMount entry')
+    console.log('[components/VideoPlayer] componentDidMount entry')
     try {
-      console.log('[containers/VideoPlayer] componentDidMount props', this.props)
+      console.log('[components/VideoPlayer] componentDidMount props', this.props)
       this.player = videojs(this.videoNode, this.props, function onPlayerReady() {
-        console.log('[containers/VideoPlayer] onPlayerReady', this)
+        console.log('[components/VideoPlayer] onPlayerReady', this)
       });
     } catch (error) {
-      console.log('[containers/VideoPlayer] componentDidMount error', error);
+      console.log('[components/VideoPlayer] componentDidMount error', error);
     }
   }
 
@@ -41,7 +41,7 @@ class VideoPlayer extends React.Component {
 
 
   render() {
-    console.log('[containers/VideoPlayer] render')
+    console.log('[components/VideoPlayer] render')
     return (
         <div className="video-wrapper">
           <video

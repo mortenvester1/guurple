@@ -39,19 +39,19 @@ class VideoLib extends Component {
   }
 
   async handleClickOnName(record) {
-    console.log('[containers/VideoLib] handleClickOnName')
+    console.log('[components/VideoLib] handleClickOnName')
     console.log(record)
   }
 
   async componentDidMount() {
-    console.log('[containers/VideoLib] componentDidMount entry')
+    console.log('[components/VideoLib] componentDidMount entry')
     try {
       const res = await videoService.getVideoLib("/")
       this.setState((state, props) => {
         return { data: res.result.files, directory: res.result.rootDir };
       });
     } catch (error) {
-      console.log('[containers/VideoLib] componentDidMount error', error);
+      console.log('[components/VideoLib] componentDidMount error', error);
     }
   }
 
